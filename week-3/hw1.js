@@ -1,3 +1,6 @@
+//  好多星星
+
+
 function printStar(n) {
     let arr = [];
     let star = '';

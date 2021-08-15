@@ -1,27 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
-    
-    <script>
-function printStar(n) {
-    let arr = [];
-    let star = '';
-    if(n >= 1 && n <= 30){
-        for(i=0;i<n;i++) {
-            star += '*';
-            arr.push(console.log(star));
-          }
-    }
 
-  }
+<body>
+
+    <script>
+        // let lines = [5, 1, 2, 3, 4, 5];
+        function solve(lines) {
+            let arr = [];
+            let N = Number(lines[0]);
+            let P;
+            for (let i = 1; i <= N; i++) {
+                P = Number(lines[i]);
+                arr.push(check(P));
+            }
+            console.log(arr)
+
+
+        }
+
+
+
+        function check(num) {
+            let arr = []
+            for (i = 2; i < num; i++) {
+                if (num % i === 0) {
+                    return 'Composite';
+                }
+            }
+            if (num === 1) {
+                return 'Composite';
+            } else {
+                return 'Prime';
+            }
+        }
+
+
+        solve([5, 1, 2, 3, 4, 5]);
+
+
     </script>
 
-    
+
 </body>
+
 </html>
