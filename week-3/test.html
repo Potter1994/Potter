@@ -11,38 +11,31 @@
 <body>
 
     <script>
-        // let lines = [5, 1, 2, 3, 4, 5];
-        function solve(lines) {
-            let arr = [];
-            let N = Number(lines[0]);
-            let P;
-            for (let i = 1; i <= N; i++) {
-                P = Number(lines[i]);
-                arr.push(check(P));
-            }
-            console.log(arr)
 
+// 聯誼順序比大小
 
-        }
+function solve(lines) {
+    let arr = [];
+    for(let i = 1; i < lines.length; i++) {
+        let line = lines[i].toString().split(' ');
+        let A = Number(line[0]);
+        let B = Number(line[1]);
+        let K = Number(line[2]);
+        arr.push(whoWin(A, B, K));
+    }
+    console.log(arr);
+}
 
-
-
-        function check(num) {
-            let arr = []
-            for (i = 2; i < num; i++) {
-                if (num % i === 0) {
-                    return 'Composite';
-                }
-            }
-            if (num === 1) {
-                return 'Composite';
-            } else {
-                return 'Prime';
-            }
-        }
-
-
-        solve([5, 1, 2, 3, 4, 5]);
+function whoWin(a, b, k){
+    if (a === b){
+        return 'DRAW'
+    }
+    if (k === 1){
+        return (a > b) ? 'A' : 'B';
+    } else if(k === -1){
+        return (a > b) ? 'B' : 'A';
+    }
+}
 
 
     </script>
