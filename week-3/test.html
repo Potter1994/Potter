@@ -12,39 +12,22 @@
 
     <script>
 
-// 聯誼順序比大小
-        function solve (lines) {
-            for(i = 1; i < lines.length; i++){
-            let [a, b, k] = lines[i].split(' ');
-            whoWin(a, b, k)
+
+        function solve(lines) {
+            let n = lines[0];
+            let m = lines[n];
+            let str ='';
+            let result = '';
+            for(let i = 1; i < n; i++) {
+                str += lines[i];
             }
+            for(let j = n + 2; j < n + m; j++){
+                result += str.split('')[Number(lines[j])]
+            }
+            console.log(result);
         }
 
 
-        function whoWin(a, b, k) {
-            if( a == b) {
-                return 'DRAW'
-            }
-
-            if( k == -1) {
-                let temp = a;
-                a = b;
-                b = temp;
-            }
-
-            const lengtha = a.length;
-            const lengthb = b.length;
-            if(lengtha !== lengthb){
-                return console.log((lengtha > lengthb) ? 'A' : 'B')
-            }
-
-            if(lengtha === lengthb) {
-                return console.log(( a > b) ? 'A' : 'B')
-            }
-
-
-            return console.log(( a > b) ? 'A' : 'B')
-        }
 
     </script>
 
