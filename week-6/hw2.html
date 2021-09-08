@@ -59,7 +59,7 @@
         .special{
             margin: 10px 0;
         }
-        .container .item>label::after{
+        .container .required::after{
             content: '*';
             color: #f00;
             padding-left: 3px;
@@ -92,19 +92,19 @@
     <div class="container">
         <form action="">
             <div class="item">
-                <label for="name">暱稱</label>
+                <label for="name" class="required">暱稱</label>
                 <input class="text-input" type="text" id="name" placeholder="你的暱稱">
             </div>
             <div class="item">
-                <label for="mail">電子郵件</label>
+                <label for="mail" class="required">電子郵件</label>
                 <input class="text-input" type="text" id="mail" placeholder="你的電子郵件">
             </div>
             <div class="item">
-                <label for="phone">手機號碼</label>
+                <label for="phone" class="required">手機號碼</label>
                 <input class="text-input" type="text" id="phone" placeholder="你的手機號碼">
             </div>
             <div class="item">
-                <label for="type">報名類型</label>
+                <label for="type" class="required">報名類型</label>
                 <div class="special">
                     <input type="radio" id="first" name="type" value="練習用input跟label搭配">
                     <label for="first">練習用input跟label搭配</label>
