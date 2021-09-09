@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        body {
+            padding: 30px;
+        }
+
+        .header {
+            width: 1200px;
+            margin: auto;
+            margin-top: 40px;
+        }
+
+        .header h1 {
+            font-size: 46px;
+        }
+
+        .active {
+            width: 1200px;
+            margin: auto;
+            margin-top: 30px;
+        }
+
+        .notification {
+            width: 1200px;
+            margin: auto;
+            margin-top: 30px;
+            color: #f00;
+            font-size: 20px;
+        }
+
+        .container .item {
+            width: 1200px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .container label {
+            padding: 15px 0px;
+        }
+
+        .container .text-input {
+            width: 200px;
+            border: 1px solid #aaa;
+            padding: 3px 0;
+            margin-bottom: 20px;
+        }
+
+        .special {
+            margin: 10px 0;
+        }
+
+        .container .required::after {
+            content: '*';
+            color: #f00;
+            padding-left: 3px;
+            font-size: 20px;
+        }
+
+        button {
+            background-color: #fff;
+            margin-top: 30px;
+            /* border: 2px solid #ccc; */
+            padding: 4px 6px;
+            cursor: pointer;
+        }
+
+        .itemB #result::before {
+            content: '尚未輸入';
+            display: block;
+            /* background-color: #aaa; */
+            position: absolute;
+            top: 35px;
+            color: #f00;
+        }
+
+        .itemA #result::before {
+            /* display: none; */
+            content: '尚未輸入';
+            display: block;
+            /* background-color: #aaa; */
+            position: absolute;
+            bottom: -3px;
+            color: #f00;
+        }
+
+        .itemB {
+            position: relative;
+        }
+
+        .item {
+            position: relative;
+        }
+        .btn{
+            width: 1200px;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="header">
+        <h1>報名表單</h1>
+    </div>
+
+    <div class="active">
+        <div class="item">
+            <p>活動日期 : 2020/12/10 ~ 2020/12/11</p>
+        </div>
+        <div class="item">
+            <p>活動地點 : 台北市大安區新生南路二段１號</p>
+        </div>
+    </div>
+
+    <div class="notification">
+        <p>*必填</p>
+    </div>
+
+
+    <div class="container">
+        <form action="">
+            <div class="item itemA">
+                <label for="name" class="required">暱稱</label>
+                <input class="text-input" type="text" id="name" placeholder="你的暱稱">
+            </div>
+            <div class="item itemA">
+                <label for="mail" class="required">電子郵件</label>
+                <input class="text-input" type="text" id="mail" placeholder="你的電子郵件">
+            </div>
+            <div class="item itemA">
+                <label for="phone" class="required">手機號碼</label>
+                <input class="text-input" type="text" id="phone" placeholder="你的手機號碼">
+            </div>
+            <div class="item itemB">
+                <label for="type" class="required">報名類型</label>
+                <div class="special">
+                    <input type="radio" id="first" name="type" value="練習用input跟label搭配">
+                    <label for="first">練習用input跟label搭配</label>
+                </div>
+                <div class="special">
+                    <input type="radio" id="second" name="type" value="用form做表單">
+                    <label for="second">用form做表單</label>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="btn">
+        <button>送出表單</button>
+    </div>
+
+    <script>
+        const name = document.querySelector('#name');
+        const mail = document.querySelector('#mail');
+        const phone = document.querySelector('#phone');
+        const button = document.querySelector('button');
+        const itemA = document.querySelectorAll('.itemA');
+        const first = document.querySelector('#first');
+        const second = document.querySelector('#second');
+        const special = document.querySelectorAll('.special')
+        let value;
+
+
+        // itemA[0].childNodes[1].className += ' result'
+        button.addEventListener('click', () => {
+            special[0].setAttribute('id', 'result')
+            for (let i = 0; i < itemA.length; i++) {
+                itemA[i].childNodes[1].removeAttribute('id', 'result')
+            }
+            if (name.value == "") {
+                itemA[0].childNodes[1].setAttribute('id', 'result')
+            }
+            if (mail.value == "") {
+                itemA[1].childNodes[1].setAttribute('id', 'result')
+            }
+            if (phone.value == "") {
+                itemA[2].childNodes[1].setAttribute('id', 'result')
+            }
+            if (first.checked == true || second.checked == true) {
+                special[0].removeAttribute('id', 'result')
+                if (first.checked) { value = first.value; }
+                else { value = second.value }
+            }
+            if (name.value !== "" && mail.value !== "" && phone.value !== "" && (first.checked == true || second.checked == true)) {
+                alert(`暱稱 : ${name.value}\n電子郵件 : ${mail.value}\n手機號碼 : ${phone.value}\n報名類型 : ${value}`)
+            }
+        })
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+
+</body>
+
+</html>

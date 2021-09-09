@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #eceb82;
+        }
+
+        .wrap {
+            width: 960px;
+            margin: auto;
+        }
+
+        .addText {
+            border: none;
+            width: 40%;
+            border-bottom: 1px solid #aaa;
+            padding-bottom: 0.4em;
+            background-color: #eceb82;
+        }
+
+        .addText:focus {
+            outline: none;
+
+        }
+
+        .addText:focus::placeholder {
+            color: transparent;
+        }
+
+        .item {
+            width: 960px;
+            height: 50px;
+            display: flex;
+            /* background-color: #fa0; */
+            margin: 2px 0;
+            position: relative;
+            
+        }
+        .item input{
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            align-self: center;            
+            margin-right: 10px;
+        }
+        .item button{
+            border: none;
+            background-color: transparent;
+            text-align: right;
+            font-size: 20px;
+            position: absolute;
+            right: 6px;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            padding: 0 6px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <form action="">
+            <h1>Todo List</h1>
+            <input type="text" class="addText" placeholder="Add something to do here">
+        </form>
+    </div>
+    <script>
+        const addText = document.querySelector('.addText');
+        const form = document.querySelector('form');
+        const wrap = document.querySelector('.wrap');
+        // window.addEventListener('keydown', (e)=>{
+        //     if(e.keyCode === 13){
+
+        //     }
+        // })
+        
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            let para = document.createElement('p');
+            // btn
+            const btn = document.createElement('button');
+            btn.textContent = 'X';
+            
+
+            const checkBox = document.createElement('input')
+            checkBox.setAttribute('type', 'checkbox')
+
+
+            const item = document.createElement('div');
+            item.className = 'item';
+            para.textContent = addText.value
+
+
+
+            // 建立DOM段落
+            wrap.appendChild(item)
+            item.appendChild(checkBox)
+            item.appendChild(para)
+            item.appendChild(btn)
+
+            checkBox.addEventListener('change', ()=>{
+                item.style.color = 'rgba(50, 50, 50,.6)';
+                btn.style.color = 'rgba(50, 50, 50,.6)';
+                checkBox.setAttribute('disabled','disabled');
+                checkBox.style.color = 'rgba(50, 50, 50,.6)';
+                para.style.textDecoration = 'line-through';
+            })
+
+            btn.addEventListener('click', (e)=>{
+                item.remove();
+            })
+
+        
+            addText.value = '';
+            
+        }, true)
+
+
+
+        
+
+
+    </script>
+
+</body>
+
+</html>

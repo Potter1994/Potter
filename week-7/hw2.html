@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            padding: 40px;
+        }
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        .nav-bar{
+            width: 960px;
+            margin: auto;
+            border-bottom: 2px solid #aaa;
+            padding: 10px 0;
+            margin-bottom: 10px;
+        }
+        .nav-bar .wrap{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+        .nav-bar h2{
+            color: rgb(97, 182, 125);
+        }
+        .nav-bar nav a{
+            display: inline-block;
+            text-decoration: none;
+            color: #333;
+            padding: 6px 15px;
+            border-radius: 20px 20px 20px 20px;
+            /* background-color: #aaa; */
+        }
+        .nav-bar nav a:hover{
+            background-color: rgb(238, 138, 138);
+            color: #fff;
+        }
+        .question .item{
+            display: flex;
+            padding: 10px 0;
+            border-bottom: 2px solid rgb(202, 221, 203);
+            margin-bottom: 6px;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .question span{
+            color: rgb(97, 182, 125);
+            margin-right: 6px;
+        }
+        .question p{
+            padding: 10px;
+            transition: opacity .5s;
+        }
+        .hide{
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="nav-bar">
+        <div class="wrap">
+            <div class="text">
+                <h2>Just A Bite！</h2>
+            </div>
+            <nav>
+                <a href="#">抽個大獎</a>
+                <a href="#">我要點餐</a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="question">
+        <div class="item">
+            <h3><span>Q1 :</span> 如何辦理退貨？</h3>
+            <p class="hide">相信大家在日常生活中，不時會看到或是聽到 FAQ 跟 Q&A，這兩個都是縮寫，到底它們是什麼意思呢？一樣嗎？有</p>
+        </div>
+        <div class="item">
+            <h3><span>Q2 :</span> 提供那些付款方式呢？</h3>
+            <p class="hide">看出來了嗎？它的意思就是針對某一個主題，列出大家常見的相關問題，並提供答案</p>
+        </div>
+        <div class="item">
+            <h3><span>Q3 :</span> 如何查詢目前訂單的處理創逛？</h3>
+            <p class="hide">也可以寫成 Q and A，展開來就是 question and answer。Q&A 可用在兩個情況</p>
+        </div>
+        <div class="item">
+            <h3><span>Q4 :</span> 如果缺貨，何時進貨呢？</h3>
+            <p class="hide">台灣很多人都把 Q&A 唸成 QA 兩個字母而已，不可以喔！中間明明還夾著一個 and，不可以假裝人家不存在啦</p>
+        </div>
+        <div class="item">
+            <h3><span>Q5 :</span> 線上刷卡如何操作？</h3>
+            <p class="hide">一個想要一輩子都當個老師＋學生＋書籍譯者的貪心鬼🤘，個人專頁 Yes Min：當英文家教／書籍譯者是一件很迷人的事。熱愛學習、腦力激盪、語言、文字、文學以及文化。平常是埋首事務的工作狂</p>
+        </div>
+    </div>
+
+
+
+    <script>
+        const item = document.querySelectorAll('.item');
+        const para = document.querySelectorAll('p');
+
+
+        for(let i = 0; i < item.length; i++){
+            item[i].addEventListener('click', (e)=>{
+                if(para[i].classList[0] !== 'hide')
+                para[i].classList.add('hide')
+                else{
+                    para[i].classList.remove('hide')
+                }
+
+            })
+            
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>
