@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        .page-bar{
+            position: absolute;
+            cursor: pointer;
+            display: flex;
+            right: 44%;
+            bottom: 7%;
+            z-index: 2;
+        }
+        .page{
+            /* display: inline-block; */
+            cursor: pointer;
+            margin: 0 3px;
+            width: 30px;
+            height: 2px;
+            background-color: #fff;
+        }
+        .banner{
+            width: 30%;
+            top: 50px;
+            margin: auto;
+            position: relative;
+            background-color: #fa0;
+            
+        }
+        .item, .item .pic{
+            width: 100%;
+            height: 300px;
+        }
+        .active{
+            position: relative;
+        }
+        .inner .item{
+            position: absolute;
+            top: 0;
+            /* background-color: #faa; */
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            align-items: flex-end;
+            padding-bottom: 50px;
+            box-sizing: border-box;
+        }
+        .inner .pic{
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        .inner .pic img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            vertical-align: middle;
+        }
+        .inner .text{
+            color: #398;
+        }
+        .inner .text h5{
+            font-size: 20px;
+            padding-bottom: 0.4em;
+        }
+        .control-prev{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #777;
+            /* background-color: #ffa; */
+            position: absolute;
+            top: 0;
+            width: 10%;
+            height: 100%;
+            text-decoration: none;
+            font-size: 40px;
+
+        }
+        .control-next{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #777;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 10%;
+            height: 100%;
+            /* background-color: #ffa; */
+            text-decoration: none;
+            font-size: 40px;
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="banner">
+        <ol class="page-bar">
+            <li class="page"></li>
+            <li class="page"></li>
+            <li class="page"></li>
+        </ol>
+        <div class="inner">
+            <div class="item active">
+                <div class="pic">
+                    <img src="https://fakeimg.pl/1300x300/?text=First" alt="">
+                </div>
+                <div class="text">
+                    <h5>First slide label</h5>
+                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                </div>
+            </div>
+            <div class="item">
+                <div class="pic">
+                    <img src="https://fakeimg.pl/1300x300/?text=Second" alt="">
+                </div>
+                <div class="text">
+                    <h5>Second slide label</h5>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+            </div>
+            <div class="item">
+                <div class="pic">
+                    <img src="https://fakeimg.pl/1300x300/?text=Third" alt="">
+                </div>
+                <div class="text">
+                    <h5>Third slide label</h5>
+                    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+                </div>
+            </div>
+            <!-- <a href="" class="control-prev">
+                <span class='control-prev-icon'><</span>
+            </a>
+            <a href="" class="control-next">
+                <span class='control-next-icon'>></span>
+            </a> -->
+        </div>
+
+        
+    </div>
+
+
+
+
+</body>
+
+</html>
