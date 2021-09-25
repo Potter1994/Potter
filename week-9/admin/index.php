@@ -1,5 +1,6 @@
 <?php
-require_once('conn.php');
+require_once('../conn.php');
+require_once('../php/check_user_login.php');
 $datas = $con -> query('SELECT * FROM `comment` ORDER BY `id` DESC LIMIT 50');
 ?>
 <!DOCTYPE html>
@@ -7,7 +8,7 @@ $datas = $con -> query('SELECT * FROM `comment` ORDER BY `id` DESC LIMIT 50');
 <head>
   <meta charset="utf-8">
   <title>留言板</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../style.css">
 </head>
 <body>
   <header class="warning">
@@ -15,18 +16,10 @@ $datas = $con -> query('SELECT * FROM `comment` ORDER BY `id` DESC LIMIT 50');
   </header>
   <main class="board">
       <h1 class="board__title">Comments</h1>
-      <form class="board__new-comment-form" method="POST" action="handle_add_comment.php">
+      <form class="board__new-comment-form" method="POST" action="../php/add_comment.php">
         <div class="board__nickname">
-          <span>暱稱：</span>
-          <input type="text" name="nickname" />
-        </div>
-        <div class="board__password">
-          <span>密碼：</span>
-          <input type="password" name="password" />
-        </div>
-        <div class="board__button">
-          <button class="login">登入</button>
-          <button class="register">註冊</button>
+          <span>HI, <?php echo $user['username'] . '<br>';?></span>
+          <span>歡迎留言</span>
         </div>
         <textarea name="content" rows="5"></textarea>
         <input class="board__submit-btn" type="submit" />
@@ -61,9 +54,18 @@ $datas = $con -> query('SELECT * FROM `comment` ORDER BY `id` DESC LIMIT 50');
     $(document).ready(()=>{
       $('.board__new-comment-form').submit((e)=>{
         e.preventDefault();
-        alert('請先登入會員');
-      })
+        $.ajax({
+          method: 'POST',
+          url: '../php/add_comment.php',
+          data: {
+            'context': $('textarea').val()
+          },
+          dataType: 'html'
+        }).done((data)=>{
+          window.location.reload();
+        })
 
+      })
 
 
     })
