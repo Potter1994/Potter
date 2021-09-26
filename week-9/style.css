@@ -105,3 +105,6 @@ button:disabled{
       background-color: #ccc;
       color: #fff;
 }
+.board__submit-btn:hover{
+  background-color: #ccc;
+}
