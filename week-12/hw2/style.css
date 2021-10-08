@@ -1,0 +1,145 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+body{
+    display: flex;
+    flex-direction: column;
+}
+.save{
+    align-self: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #000;
+    color: #eee;
+    border: none;
+}
+.save:hover{
+    background-color: #aaa;
+    cursor: pointer;
+    color: #fff;
+}
+.todo{
+    padding: 20px;
+    width: 760px;
+    margin: 0 auto;
+    border: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+}
+h1{
+    margin: auto;
+    color: rgb(155, 89, 155);
+    font-size: 70px;
+    margin-bottom: 20px;
+}
+.list__item{
+    display: flex;
+    position: relative;
+}
+.list__item button{
+    position: absolute;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 30px;
+    top: 0;
+    bottom: 0;
+    color: #cc9a9a;
+    background-color: #fff;
+    border: none;
+    /* margin: auto 0;  */
+    margin-bottom: 11px;   
+}
+.todo-list{
+    width: 90%;
+    padding: 10px;
+    font-size: 20px;
+    border: none;
+    height: 40px;
+}
+.todo-list:focus{
+    outline: none;
+}
+form{
+    margin-bottom: 15px;
+}
+.select-all{
+    width: 45px;
+    height: 45px;
+    background-color: #fff;
+    font-size: 20px;
+    border: none;
+    transform: rotate(90deg);
+}
+.check{
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+    border: 3px solid #f00;
+    outline: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+}
+
+.text{
+    font-size: 20px;
+    padding: 4px;
+}
+.list__item label{
+    font-size: 24px;
+    padding: 15px 15px 15px 60px;
+    display: block;
+    line-height: 1.2;
+    
+}
+.list__item.linethrouth  label{
+    text-decoration: line-through;
+    color: #ccc;
+}
+.footer{
+    color: #777;
+    padding: 10px 15px;
+    height: 30px;
+    border-top: 1px solid #e6e6e6;
+    display: flex;
+}
+.footer span{
+    width: 15%;
+}
+.footer ul{
+    width: 85%;
+    display: flex;
+    justify-content: center;
+}
+.footer ul li{
+    margin: 4px;
+    
+}
+.footer button{
+    height: 25px;
+    border: none;
+    background-color: #fff;
+    color: #777;
+}
+.footer ul li a{
+    text-decoration: none;
+    border-radius: 4px;
+    padding: 4px;
+    color: #777;
+}
+.footer ul li a:hover{
+    border: 1px solid #afa;
+}
+.active a{
+    border: 1px solid #faa;
+}
+
+/* .linethrouth{
+    text-decoration: line-through;
+    color: #ccc;
+} */

@@ -1,0 +1,19 @@
+1. 新增
+2. 渲染
+3. tab 切換 (CSS) 樣式
+4. 刪除 & 切換 checked 狀態功能
+5. 更新待辦清單
+6. 刪除已完成 todo
+7. 優化 (keypress)
+
+
+
+; `
+; <div class="todo list-group-item list-group-item-action justify-content-between align-items-center" data-id="">
+;     <div class="todo__content-wrapper custom-control custom-checkbox">
+;         <input type="checkbox" class="check-todo custom-control-input" id="">
+;         <label class="todo__content custom-control-label" for=""></label>
+;     </div>
+;     <button type="button" class="btn-delete btn btn-danger">刪除</button>
+; </div>
+; `
