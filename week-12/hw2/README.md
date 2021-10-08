@@ -50,9 +50,48 @@
 
 
 
-學到了一個陣列方法(method)使用 filter() ， 類似於 forEach 迭代加上了符合條件。
-學到了第 5. 取得前端目前網址方法
+----學到了一個陣列方法(method)使用 filter() ， 類似於 forEach 迭代加上了符合條件。
+----學到了第 5. 取得前端目前網址方法
 
 
 
 jQuery
+
+1. 監聽事件 (可看第 3 步驟)
+    用 on 綁定事件 (推薦用 on 是可以綁定已存在甚至還未存在的 DOM 事件，以及充分
+    利用傳播 enent bubbling 的原理和事件委任 event delegation 的技巧) ，因為事件委任的技巧讓 .on() 可以用來綁定事件處理在現在已經存在或還沒存在的 DOM 元素，像是你可以綁在 $(document).on() 監聽 DOM 的所有事件。
+
+    例如，綁一堆 click 事件處理在 #dataTable tbody 下面的一堆 tr 元素上：
+    $('#dataTable tbody tr').on('click', function() {
+    // 這裡的 this 指向 #dataTable tbody tr 這一個 DOM 元素
+    // 用 $() 將 this 轉成 jQuery object
+    console.log( $(this).text() );
+    });
+
+
+    V.S. 綁一個 click 事件處理在 #dataTable tbody 上，然後監聽從 tr bubble 上來的 click 事件：
+    $('#dataTable tbody').on('click', 'tr', function() {
+    // 這裡的 this 指向符合 selector 的 DOM 元素，也就是 tr
+    console.log( $(this).text() );
+    });
+
+    -----------------  以上我的解釋  --------------------
+    就是綁一堆 event 在每一個物件上不如綁一個事件監聽在他們的父層靠著事件 bubbling 的特性往上傳遞監聽就好，相當於只綁了一個事件監聽!!
+
+
+2. 與原生 JS 差別
+    1: 更好選取 DOM 物件;
+    2: 有更方便的方法 (method) 可以使用;
+    
+
+
+
+
+----------------- 後端方面 ------------------
+
+1.清楚帶入的 POST 值。
+2.串接 API 為輸入整段網址取得 echo 在頁面上的 json 資料。
+3.要設置 *** header *** 很重要。
+4.如果回傳 codeStatus 為 200 代表有成功但是 php 沒有正確 echo 出 json 資料。
+5.記得考慮各種情況，例如 POST、GET 值為空就 echo 一個失敗的 json 然後 die()，然後不為空時，是否連接成功，失敗回傳連接錯問訊息 $conn->error 。
+
