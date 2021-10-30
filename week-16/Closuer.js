@@ -1,12 +1,3 @@
-// Hoisting 有些程式語言需要先宣告 function 才能接下去寫，JS變數提升所以function寫在哪都行
-    console.log(a);
-    var a = 10;
-    /* 
-    var a;
-    console.log(a);
-    a=10;
-    */
-
 
 // Closuer 把你不想被外面變數影響的東西丟進去一個function當成她的環境(作用域)，例如
 // 有兩個需要用到count的計數器，各給他一個createCounter()，互相不影響彼此的count。
