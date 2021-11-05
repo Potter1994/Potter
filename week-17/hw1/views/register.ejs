@@ -1,0 +1,10 @@
+<a href="/">首頁</a>
+<h1>註冊頁面</h1>
+<h2> <%= errorMessage %> </h2>
+
+<form method="POST" action="/register">
+    <div>帳號: <input type="text" name="username"></div>
+    <div>暱稱: <input type="text" name="nickname"></div>
+    <div>密碼: <input type="password" name="password"></div>
+    <input type="submit" value="註冊帳號">
+</form>

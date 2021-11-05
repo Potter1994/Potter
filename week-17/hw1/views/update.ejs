@@ -1,0 +1,6 @@
+<h1>編輯內文</h1>
+
+<form method="POST" action="/update_comment/<%= result.id %>">
+    <div>內文 <textarea name="content"><%= result.content %> </textarea> </div>
+    <input type="submit">
+</form>

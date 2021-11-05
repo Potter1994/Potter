@@ -1,0 +1,45 @@
+Express 雷點
+
+1. 資料庫雷點，mysql 8.0 密碼支援問題所以 npm 多下載一個 mysql2 來解決密碼問題;
+2. 基本雷點，models 的資料要非同步才能view出來，使用callback(我的view 符號打錯所以雷到)
+3. 基本雷點，controller 取得單個的時候 req.params.id 定義出來 model的就能拿來當為參數(我把結果[id]來取得是第幾個，但是早就在model層就取得了)
+4. 語法雷點，是 redirect('/') 不是 redirect = '/'
+5. 注意 controller 的執行順序，在index.js的middleware順序要放好
+6. 資料庫雷點，密碼hash過所以長度需要增加否則無法匯入
+7. model 層的callback function 記得要在err的地方給上null值帶回去
+
+
+
+Express 注意
+
+1. db.connection() 在 Server 運行時再開啟就好。
+2. views頁面渲染 res.render()
+3. middleware 中間件，可閉包function,在要使用的地方以參數帶入，由於next()所以將參數放置中間
+4. res.locals.username 在view 可以直接存取到res.locals裡面的變數。
+
+
+
+
+會員註冊系統
+註冊:
+安裝bcrypt幫密碼做hsah
+if(err){要return} 不然會接著做下去出錯 ERR_HTTP_HEADERS_SENT
+Controller的handleRegister，參數記得多一個next給下面使用 (如果出錯直接return next()將控制權轉給下一個)
+記得定完post的值後確認是否為空
+雜湊完密碼將password改為雜湊完的hash值，使用 userModel.add 來新增user。
+過程只要有失敗，都要teturn next() 將控制權轉交下一個
+
+登入(確認身分):
+Controller的handleLogin， 確認帳號密碼都不為空 -> 
+!result (使用者不存在) -> 確認密碼 bcrypt.compare (err或!success都為密碼錯誤)
+
+middleware 雷點
+flash 要先使用 app.use(flash())
+flash 使用在 req，可搭配res.locals 存放在回應端
+
+
+簡易留言板:
+SQL語法錯誤，在getAll的語法裡面不用再特別加上單引號或雙引號
+有可能回傳的結果是被刪除了或怎樣的 cb(null, result[0] || {}); 多加一個 || {}
+在 update 取得編輯留言，如果username不相符一樣不能取得，不會回傳err所以判斷式多一個 !result
+post 的發出的內容一樣是在 req.body
