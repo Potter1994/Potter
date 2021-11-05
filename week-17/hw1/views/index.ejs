@@ -84,11 +84,26 @@
             display: block;
             padding: 10px;
         }
+        .load-more{
+            display: block;
+            margin: 40px auto;
+            padding: 10px 20px;
+            background-color: #fff;
+            border: none;
+            box-shadow: 0 0 5px #aaa;
+            transition: .2s;
+        }
+        .load-more:hover{
+            background-color: #999;
+            color: #fff;
+            transform: scale(1.2);
+        }
     </style>
 </head>
 <body>
     <%= errorMessage %>
 <%- include('template/header') %>
+<input id="username" type="text" data-username="<%= username %>" hidden>
 <% if(username){ %>
     <form class="add-comment" method="POST" action="/comment">
         <h2> <%= username %></h2>
@@ -100,7 +115,7 @@
 <% if(comments){ %>
     <div class="comment">
         <% comments.forEach(i=>{ %>
-            <div class="item">
+            <div class="item" data-id="<%= i.id %>">
                 <div>
                     <h2><%= i.nickname %></h2>
                     <p><%= i.content %></p>
@@ -114,7 +129,86 @@
             </div>
         <% }) %>
     </div>
+    <button class="load-more">載入更多</button>
 <% }else{} %>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(()=>{
+    
+    let pageId = document.querySelectorAll('.item:last-of-type')[0].dataset.id;
+    const loadBtn = document.querySelector('.load-more');
+    const commentItem = document.querySelector('.comment');
+    loadBtn.addEventListener('click', loadMore);
+    console.log(pageId);
 
+    function getMore(before, cb){
+        $.ajax({
+            url: `http://localhost:9999/api/comments/${before}`,
+            method: 'GET'
+        }).done(data=>{
+            cb(data);
+        }).fail(err=>{
+            cb(err);
+        })
+    }
+
+    function loadMore (){
+        getMore(pageId, (data)=>{
+            let str = ''
+            console.log(data);
+            if(data.length < 5){
+                loadBtn.style.display = 'none';
+                for(let i = 0; i < data.length ; i++){
+                if($('#username') && $('#username')[0].dataset.username === data[i].username) {
+                str += `<div class="item" data-id="${data[i].id}">
+                        <div>
+                            <h2>${data[i].nickname}</h2>
+                            <p>${data[i].content}</p>
+                        </div>
+                        <div class="update-area">
+                                <a href="/update_comment/${data[i].id}">編輯</a>
+                                <a href="/delete_comment/${data[i].id}">刪除</a>
+                        </div>
+                    </div>`
+                }else{
+                    str += `<div class="item" data-id="${data[i].id}">
+                                <div>
+                                    <h2>${data[i].nickname}</h2>
+                                    <p>${data[i].content}</p>
+                                </div>
+                            </div>`
+                }
+            }
+            
+                return $('.comment').append(str);
+            }
+            for(let i = 0; i < data.length-1 ; i++){
+                if($('#username') && $('#username')[0].dataset.username === data[i].username) {
+                str += `<div class="item" data-id="${data[i].id}">
+                        <div>
+                            <h2>${data[i].nickname}</h2>
+                            <p>${data[i].content}</p>
+                        </div>
+                        <div class="update-area">
+                                <a href="/update_comment/${data[i].id}">編輯</a>
+                                <a href="/delete_comment/${data[i].id}">刪除</a>
+                        </div>
+                    </div>`
+                }else{
+                    str += `<div class="item" data-id="${data[i].id}">
+                                <div>
+                                    <h2>${data[i].nickname}</h2>
+                                    <p>${data[i].content}</p>
+                                </div>
+                            </div>`
+                }
+            }
+            $('.comment').append(str);
+            pageId = data[data.length-2].id;
+        })
+    }
+    
+})
+</script>
 </body>
 </html>

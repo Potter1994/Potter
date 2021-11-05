@@ -43,3 +43,7 @@ SQL語法錯誤，在getAll的語法裡面不用再特別加上單引號或雙�
 有可能回傳的結果是被刪除了或怎樣的 cb(null, result[0] || {}); 多加一個 || {}
 在 update 取得編輯留言，如果username不相符一樣不能取得，不會回傳err所以判斷式多一個 !result
 post 的發出的內容一樣是在 req.body
+
+實作分頁機制:
+多一個路由 api/comment/:id 來放置API給前端取資料
+使用閉包原理來讓 pageId 固定(計時器原理，不被外面的pageId影響，只被自己設置的影響)，可以偷放一個 hidden的input放置username

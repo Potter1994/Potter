@@ -42,6 +42,16 @@ const commentController = {
         commentModel.delete(req.params.id, req.session.username, (err, result)=>{
             res.redirect('/');
         })
+    },
+    apiComments: (req, res, next)=>{
+        const id = req.params.id;
+        commentModel.pagination(id, (err, result)=>{
+            if(err) {
+                // console.log(err);
+                return next();
+            }
+            res.json(result);
+        })
     }
 }
 

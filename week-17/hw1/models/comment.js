@@ -8,6 +8,7 @@ const commentModel = {
             LEFT JOIN user as u
             ON c.username = u.username
             ORDER BY c.id DESC
+            LIMIT 4
             `, (err, result)=>{
                 if (err) return cb(err);
                 cb(null, result);
@@ -36,6 +37,19 @@ const commentModel = {
     },
     delete: (id, username, cb)=>{
         db.query('DELETE FROM comments WHERE id = ? AND username = ?',[id, username],
+        (err, result)=>{
+            if(err) return cb(err);
+            cb(null, result);
+        })
+    },
+    pagination: (id, cb)=>{
+        const limit = 5;
+        db.query(`SELECT c.id, c.username, c.content, u.nickname
+        FROM comments as c
+        LEFT JOIN user as u ON c.username = u.username
+        WHERE c.id < ? 
+        ORDER BY c.id DESC LIMIT ?`, 
+        [id, limit],
         (err, result)=>{
             if(err) return cb(err);
             cb(null, result);
