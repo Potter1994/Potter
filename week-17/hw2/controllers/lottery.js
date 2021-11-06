@@ -102,7 +102,13 @@ const lotteryController = {
     },
     prizeResult: (req, res, next)=>{
         lotteryModel.getAll((err, result)=>{
-            const response = randomPrize(result);
+            const weightSum = result.reduce((a,b)=>{
+                return a + b.weight;
+            },0)
+            const sortData = result.sort((a,b)=>{
+                return a.weight - b.weight;
+            })
+            const response = randomPrize(result, weightSum, sortData);
             if(err) {
                 req.flash('errorMessage', err.toString());
                 res.redirect('back');
@@ -115,17 +121,12 @@ const lotteryController = {
 
 module.exports = lotteryController;
 
-function randomPrize (arr){
-    let sumWeight = arr.reduce((a,b)=>{
-        return a + b.weight;
-    },0)
-    let randomIndex = Math.random() * sumWeight;
-    let newArr = arr.concat({weight:randomIndex}).sort((a,b)=>{return a.weight - b.weight})
-    let prizeIndex = newArr.findIndex(i=>i.weight == randomIndex);
-    if(prizeIndex >= arr.length ){
-        return arr[prizeIndex-1]
-    }
-    return arr[prizeIndex];
+function randomPrize (arr, arrSum, sortArr){ // (原本的獎品, 獎品權重, 依權重排列後的獎品)
+    const randomIndex = Math.random() * arrSum; // 取得隨機 0~權重值
+    const newArr = arr.concat({weight:randomIndex}).sort((a,b)=>{return a.weight - b.weight}) // 將隨機權重值(randomIndex)加入陣列後排序
+    let prizeIndex = newArr.findIndex(i=>i.weight == randomIndex); // 取得 randomIndex 位置
+    prizeIndex = Math.min(prizeIndex, arr.length-1); // 最大index不超過獎品index值
+    return sortArr[prizeIndex]; // 排序後的獎品[prizeIndex]
 }
 
 
