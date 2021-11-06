@@ -1,0 +1,11 @@
+<% if(username){ %>
+<a href="/">首頁</a>
+<h1>更新獎品資訊</h1>
+<form method="POST" action="/prize/update/<%= data.id %>">
+    <div>獎品名稱: <input type="text" name="name" value="<%= data.name %>"></div>
+    <div>獎品權重: <input type="text" name="weight" value="<%= data.weight %>"></div>
+    <div>圖片網址: <input type="text" name="imageurl" value="<%= data.url %>"></div>
+    <div>獎品描述: <textarea name="describe"><%= data.describe %></textarea></div>
+    <input type="submit" class="btn add-btn" value="更新獎品">
+</form>
+<% } %>

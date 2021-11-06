@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .nav{
+            font-size: 36px;
+            padding: 20px;
+        }
+        .nav a{
+            box-sizing: border-box;
+            text-decoration: none;
+            border: 1px solid #777;
+            color: #333;
+            padding: 10px;
+            transition: .2s;
+        }
+        .nav a:hover{
+            background-color: #000;
+            color: #fff;
+        }
+        .header{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header h1{
+            padding: 10px;
+        }
+        .main h1{
+            color: #aa0040;
+            font-size: 46px;
+            padding: 15px;
+        }
+        .lottery{
+            width: 900px;
+            margin: 50px auto;
+        }
+        table{
+            width: 800px;
+        }
+        .lottery-info td{
+            border: 1px solid #aaa;
+            padding: 10px;
+            text-align: center;
+        }
+        .lottery-info table tr:first-child{
+            background-color: #333;
+            color: #ccc;
+        }
+        .lottery-info table td:nth-child(4){
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .lottery-info table td:nth-child(6){
+            display: flex;
+            flex-direction: column;
+        }
+        .btn{
+            margin-top: 5px;
+            padding: 4px 10px;
+        }
+        .lottery form input{
+            padding: 4px;
+            margin: 0.3rem 0;
+        }
+        .lottery form{
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 300px;
+            margin-top: 30px;
+        }
+        .lottery-item{
+            width: 600px;
+            height: 400px;
+            margin: auto;
+            border: 1px solid #aaa;
+            margin-top: 40px;
+            padding: 20px;
+            position: relative;
+        }
+        .lottery-item h1{
+            text-align: center;
+        }
+        .lottery-item img{
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            height: 100%;
+            z-index: -1;
+            /* opacity: .7; */
+            object-fit: cover;
+        }
+        .start{
+            position: absolute;
+            padding: 10px;
+            color: #fff;
+            background-color: #333;
+            cursor: pointer;
+            bottom: 30px;
+            left: 0;
+            right: 0;
+            width: 70px;
+            margin: 0 auto;
+            border: none;
+            box-shadow: 0 0 3px #777;
+        }
+        .start:hover{
+            background-color: #fff;
+            color: #000;
+        }
+        .text{
+            margin: 20px 0;
+        }
+        .prizeResult{
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0, .25);
+        }
+        .prizeResult h1{
+            padding-top: 50px;
+            color: #fff;
+            font-size: 48px;
+        }
+        .prizeResult h2,
+        .prizeResult p{
+            color: #fff;
+            text-align: center;
+        }
+        .prizeResult h2{
+            font-size: 36px;
+            color: #fff;
+        }
+        .prizeResult p{
+            font-size: 24px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Restaurant page</h1>
+        <nav class="nav">
+                <a href="/">Homepage</a>
+            <% if(username){ %>
+                <a href="/logout">Logout</a>
+            <% }else{ %>
+                <a href="/login">Manager Login</a>
+            <% } %>
+        </nav>
+    </div>
+    <div class="main">
+        <% if(nickname){ %>
+            <h1>管理者: <%= nickname %> </h1> 
+        <% } %>
+    </div>
+
+    <div class="lottery-item">
+        <h1>抽獎</h1>
+        <div class="text">
+            <h2>獎品資訊</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti aperiam recusandae ea eligendi culpa totam vel repellat nemo, fugit molestias quas eaque dignissimos. Culpa dolorem nisi asperiores possimus ipsam atque.</p>
+        </div>
+        <div class="text">
+            <h2>活動期間</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti aperiam recusandae ea eligendi culpa totam vel repellat nemo, fugit molestias quas eaque dignissimos. Culpa dolorem nisi asperiores possimus ipsam atque.</p>
+        </div>
+        <button class="btn start">抽獎</button>
+    </div>
+    
+    <% if(username){ %>
+        <div class="lottery">
+            <div class="lottery-info">
+                <table class="prize-table">
+                    <tr>
+                        <td>ID</td>
+                        <td>獎品名稱</td>
+                        <td>權重</td>
+                        <td>圖片網址</td>
+                        <td>獎品描述</td>
+                        <td>編輯</td>
+                    </tr>
+                    
+                </table>
+            </div>
+            <%= errorMessage %>
+            <form method="POST" action="/prize/add">
+                <div>獎品名稱: <input type="text" name="name"></div>
+                <div>獎品權重: <input type="text" name="weight"></div>
+                <div>圖片網址: <input type="text" name="imageurl"></div>
+                <div>獎品描述: <textarea name="describe"></textarea></div>
+                <input type="submit" class="btn add-btn" value="新增獎品">
+            </form>
+        </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(()=>{
+            $.ajax({
+                url: 'http://localhost:9876/api/prize',
+                method: 'GET'
+            }).done(data=>{
+                let html = '';
+                data.forEach(i=>{
+                    html += `<tr>
+                            <td>${i.id}</td>
+                            <td>${i.name}</td>
+                            <td>${i.weight}</td>
+                            <td>${i.url}</td>
+                            <td>${i.describe}</td>
+                            <td>
+                                <button class="btn update-btn"><a href="/prize/update/${i.id}">編輯獎品</a></button>
+                                <button class="btn delete-btn"><a href="/prize/delete/${i.id}">刪除獎品</a></button>
+                            </td>
+                        </tr>`
+                })
+                $('.prize-table').append(html);
+            })
+            
+        })
+    </script>
+    <% } %>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(()=>{
+            $('.start').on('click', ()=>{
+                $.ajax({
+                    url: 'http://localhost:9876/api/startprize',
+                    method: 'GET'
+                }).done(data=>{
+                    console.log(data);
+                    let str = `<div class="prizeResult">
+                        <h1>${data.name}</h1>
+                                <div class="text">
+                                    <h2>獎品資訊</h2>
+                                    <p>${data.describe}</p>
+                                    <img src="${data.url}">
+                                </div>
+                        </div>`
+                    $('.lottery-item').html(str);
+                }).fail(err=>{
+                    alert(err);
+                })
+            });
+        })
+    </script>
+</body>
+</html>

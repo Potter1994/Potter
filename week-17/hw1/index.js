@@ -58,6 +58,8 @@ app.get('/update_comment/:id', checkPermission, commentController.update);
 app.post('/update_comment/:id', checkPermission, commentController.handleUpdate);
 app.get('/delete_comment/:id', checkPermission, commentController.handleDelete);
 
+app.get('/api/comments/:id', commentController.apiComments);
+
 
 
 

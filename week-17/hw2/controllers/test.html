@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        const arr = [
+        {
+            id: 3,
+            name: '二獎測試',
+            weight: 10,
+            url: 'httpL//',
+            describe: 'something'
+          },
+        {
+            id: 4,
+            name: '三獎',
+            weight: 30,
+            url: 'https://twitch.com',
+            describe: '花東一日遊',
+            update_at: null
+          },
+          {
+            id: 5,
+            name: '未中獎',
+            weight: 74,
+            url: 'https://somewhere.com',
+            describe: '銘謝惠顧，請下次加油',
+            update_at: null
+          }
+    ]
+function randomPrize (arr){
+    let sumWeight = arr.reduce((a,b)=>{
+        return a + b.weight;
+    },0)
+    let randomIndex = Math.random() * sumWeight;
+    let newArr = arr.concat({weight:randomIndex}).sort((a,b)=>{return a.weight - b.weight})
+    let prizeIndex = newArr.findIndex(i=>i.weight == randomIndex);
+    if(prizeIndex >= arr.length ){
+        return arr[prizeIndex-1]
+    }
+    return arr[prizeIndex];
+}
+
+console.log(randomPrize(arr));
+
+    </script>
+</body>
+</html>
