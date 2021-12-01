@@ -1,120 +1,133 @@
 import React, { useState } from "react";
 import "./App.css";
 
-const Square = (props) => (
-  <button className="square" onClick={props.onClick}>
-    {props.value}
-  </button>
-);
-
-const Board = (props) => {
+// 創建正方形按鈕 Square
+const Square = (props) => {
   return (
-    <>
-      {!props.winner && (
-        <div>{"Player: " + (props.chess ? "白子" : "黑子")}</div>
-      )}
-      {props.winner && (
-        <>
-          <div>{props.chess ? "白子" : "黑子"}贏了</div>
-          <button onClick={props.resetGame}>再來一局</button>
-        </>
-      )}
-      {props.squares.map((i, index) => (
-        <div key={"row" + index} className="board-row">
-          {i.map((j, jdex) => {
-            return (
-              <Square
-                value={props.squares[index][jdex]}
-                onClick={() => props.onClick(index, jdex)}
-                key={`${index}${jdex}`}
-              />
-            );
-          })}
-        </div>
-      ))}
-    </>
+    <button className="square" onClick={props.onClick}>
+      {props.value}
+    </button>
   );
 };
 
+// 創建19*19棋盤 Board (使用fill(null)來填值，再用map迴圈來建components)
+const Board = (props) => {
+  const boardArray = Array(19)
+    .fill(null)
+    .map((i, index) => (
+      <div key={"row" + index} className="board-row">
+        {Array(19)
+          .fill(null)
+          .map((j, jIndex) => (
+            <Square
+              value={props.value[index][jIndex]}
+              key={jIndex}
+              onClick={() => props.onClick(index, jIndex)}
+            />
+          ))}
+      </div>
+    ));
+  return <>{boardArray}</>;
+};
+
 function App() {
-  const [squares, setSquares] = useState(
-    Array(19)
+  // 建立一個取19*19棋盤Board上的按鈕值Square
+  const [board, setBoard] = useState({
+    squares: Array(19)
       .fill(null)
-      .map((i) => Array(19).fill(null))
-  );
-  const [chess, setChess] = useState(true);
+      .map((i) => Array(19).fill(null)),
+    xIsNext: true,
+  });
   const [winner, setWinner] = useState(null);
 
   const handleClickChess = (i, j) => {
-    const newSquares = squares.slice();
-    if (newSquares[i][j] || winner) return console.log(winner);
-    newSquares[i][j] = chess ? "○" : "●";
-    setSquares(newSquares);
-    calculateWinner(newSquares, i, j) ? setWinner(true) : setChess(!chess);
-  };
-
-  const resetGame = () => {
-    setSquares(
-      Array(19)
-        .fill(null)
-        .map((i) => Array(19).fill(null))
-    );
-    setChess(true);
-    setWinner(null);
+    const newBoard = board.squares.slice();
+    if (newBoard[i][j] || winner) return;
+    newBoard[i][j] = board.xIsNext ? "○" : "●";
+    setBoard({ ...board, squares: newBoard, xIsNext: !board.xIsNext });
+    if (checkWinner(newBoard, i, j)) return setWinner(true);
   };
 
   return (
-    <div>
+    <>
+      <div className="game-info">
+        {winner
+          ? "Winner: " + (board.xIsNext ? "黑子" : "白子")
+          : "Player: " + (board.xIsNext ? "白子" : "黑子")}
+        {winner && (
+          <button
+            className="reset-game"
+            onClick={() => {
+              setWinner(null);
+              setBoard({
+                squares: Array(19)
+                  .fill(null)
+                  .map((i) => Array(19).fill(null)),
+                xIsNext: true,
+              });
+            }}
+          >
+            再來一局
+          </button>
+        )}
+      </div>
       <Board
-        chess={chess}
-        squares={squares}
         onClick={handleClickChess}
+        value={board.squares}
+        chess={board.xIsNext}
         winner={winner}
-        resetGame={resetGame}
       />
-    </div>
+    </>
   );
 }
 
-function checkChess(boards, currentX, currentY, directionX, directionY) {
+export default App;
+
+// 檢查是否勝利function
+
+// 1. 先寫一個可以檢查各方向的連線function，等等方便使用
+function checkChess(board, currentX, currentY, directionX, directionY) {
+  // 這邊邏輯都很簡單，自己看，記得在判斷式加上一些特例(例如棋子在邊邊的時候)
+  let totalCount = 0;
   let tempX = currentX;
   let tempY = currentY;
-  const value = boards[currentX][currentY];
-  let count = 0;
-  while (count <= 4) {
+  const chessValue = board[currentX][currentY];
+  while (totalCount < 4) {
+    // 0,1,2,3,4 這樣5個
+    // early return 如果錯就快點 return 不要多去計算
     tempX += directionX;
     tempY += directionY;
     if (
       tempX < 0 ||
-      tempX > 18 ||
       tempY < 0 ||
+      tempX > 18 ||
       tempY > 18 ||
-      boards[tempX][tempY] !== value
+      board[tempX][tempY] !== chessValue ||
+      !chessValue
     ) {
       break;
     }
-    count++;
+    totalCount++;
   }
-  return count;
+  return totalCount;
 }
 
-function calculateWinner(boards, currentX, currentY) {
+// 2. 使用上面第1個function來判斷(左右、上下、左上右下、右上左下)的連線
+function checkWinner(board, currentX, currentY) {
   if (
-    checkChess(boards, currentX, currentY, 0, 1) +
-      checkChess(boards, currentX, currentY, 0, -1) >=
+    checkChess(board, currentX, currentY, 1, 0) +
+      checkChess(board, currentX, currentY, -1, 0) >=
       4 ||
-    checkChess(boards, currentX, currentY, 1, 0) +
-      checkChess(boards, currentX, currentY, -1, 0) >=
+    checkChess(board, currentX, currentY, 0, 1) +
+      checkChess(board, currentX, currentY, 0, -1) >=
       4 ||
-    checkChess(boards, currentX, currentY, 1, 1) +
-      checkChess(boards, currentX, currentY, -1, -1) >=
+    checkChess(board, currentX, currentY, 1, 1) +
+      checkChess(board, currentX, currentY, -1, -1) >=
       4 ||
-    checkChess(boards, currentX, currentY, 1, -1) +
-      checkChess(boards, currentX, currentY, -1, 1) >=
+    checkChess(board, currentX, currentY, 1, -1) +
+      checkChess(board, currentX, currentY, -1, 1) >=
       4
   )
     return true;
   return false;
 }
-
-export default App;

@@ -49,5 +49,11 @@ ul {
 }
 
 .game-info {
+  margin-bottom: 20px;
+  font-size: 26px;
+  font-weight: bolder;
+}
+
+.reset-game {
   margin-left: 20px;
 }
