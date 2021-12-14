@@ -1,0 +1,89 @@
+npm i redux react-redux
+
+// src/index.js
+在最上層 index.js
+import { Provider } from "react-redux";
+import store from "./store";
+將 Provider 包在要使用的 App 父層再用porps將store傳遞下去就能全部接收
+
+
+
+// src/store.js
+import { createStore } from "redux";
+import rootReducer from "./reducers";    // 由於只能有一個store 所以會在./reducers這裡將所有的reducers 結合 combine 之後再輸入為一隻檔案
+
+const store = createStore( rootReducer,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);  這第二個很長的東西加上去才能在瀏覽器中查看 redux 的東西
+export default store;
+
+
+
+// src/reducers/
+
+這邊範例再去 gitHub week-23 src/reducers/todoReducer.js 看如何使用，邏輯跟使用 useState 幾乎一樣
+這邊寫你會使用到的 reducer ，可以多個最後統一創建一個index.js在裡面combine所有的reducer為一隻檔案。
+reducers => 我的看法是類似於MVC的controller 功能，將拿到的資料去做邏輯、資料處理以及畫面的渲染。
+
+
+
+// src/reducers/index,js
+import 所有的 reducer 檔案進來
+import { combineReducers } from "redux";
+
+const rootReducer = combineReducers({
+	import的reducer檔案,
+	import的reducer檔案,
+	import的reducer檔案
+})
+
+export default rootReducer;
+
+
+
+// src/actions/index.js
+
+export const addTodo = ( 資料 ) => { 
+	return {
+	     type: "ADD_TODO",
+	     payload: {
+	        id: new Date().getTime(),
+	        textContent: 資料,
+	        isDone: false ,
+	}
+ };
+
+export const deleteTodo = ( id ) => {
+	return {
+	     type: "DELETE_TODO",
+	     payload: {
+	        id
+	}
+ };
+
+export 多個指令做事情的 function 來去規定方法才不會修改到其他資料。
+這些指令使用 dispatch 來調配。
+
+
+
+// src/components/TodoInput.js
+來示範如何使用，由於Provider props 了 store 下來，所以只要在我們想要使用的時候
+import { addTodo } from "../actions";   你規範的 actions 拿來使用
+import { useDispatch, useSelector } from "react-redux";  
+useSelector是來選擇你要用 store 裡面的哪一個東西，可以用redux的應用程式看 tree 狀圖
+useDispatch是來調派如何使用你規定的 actions
+
+const  todos = useSelector( state => state.todoReducer.todos );   取得todoReducer的todos了
+const  dispatch = useDispatch( );
+
+新增的按鈕上 onClick={ ( )=> dispatch( addTodo( 資料 ) ) };
+
+1.  addTodo( 資料 ) 是你規範的action
+2.  dispatch(你規範的action)     用 dispatch去使用你規範的action
+
+
+
+
+
+
+
+
