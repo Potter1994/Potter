@@ -1,62 +1,69 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { filterTodo } from "../actions";
+import { changeTab, removeAllTodos } from "../actions";
 
 function TodoTab() {
+  const currentTab = useSelector((state) => state.visibilityReducer.filter);
+  const todos = useSelector((state) => state.todoReducer.todos);
   const dispatch = useDispatch();
-  const handleClickTab = (e) => {
-    if (e.target.dataset.filter) {
-      dispatch(filterTodo(e.target.dataset.filter));
+  const handleChangeTab = (e) => {
+    if (e.target.dataset.tab) {
+      dispatch(changeTab(e.target.dataset.tab));
     }
     return;
   };
-  const currentTab = useSelector((state) => state.visibilityReducer.filter);
 
   return (
-    <div
-      onClick={(e) => handleClickTab(e)}
-      style={{
-        listStyle: "none",
-        display: "flex",
-        margin: "10px auto 0",
-        width: 250,
-        justifyContent: "space-evenly",
-      }}
-    >
-      <li
-        className={currentTab === "all" ? "active" : ""}
-        data-filter="all"
+    <>
+      <div
+        onClick={(e) => handleChangeTab(e)}
         style={{
-          cursor: "pointer",
-          border: "1px solid #333",
-          padding: "0px 10px",
+          listStyle: "none",
+          display: "flex",
+          width: 400,
+          margin: "10px auto",
+          justifyContent: "space-evenly",
         }}
       >
-        All
-      </li>
-      <li
-        className={currentTab === "undo" ? "active" : ""}
-        data-filter="undo"
-        style={{
-          cursor: "pointer",
-          border: "1px solid #333",
-          padding: "0px 10px",
-        }}
-      >
-        Undo
-      </li>
-      <li
-        className={currentTab === "complete" ? "active" : ""}
-        data-filter="complete"
-        style={{
-          cursor: "pointer",
-          border: "1px solid #333",
-          padding: "0px 10px",
-        }}
-      >
-        Complete
-      </li>
-    </div>
+        <li
+          className={currentTab === "all" ? "active" : ""}
+          data-tab="all"
+          style={{
+            border: "1px solid #aaa",
+            padding: 5,
+            width: 150,
+            cursor: "pointer",
+          }}
+        >
+          All
+        </li>
+        <li
+          className={currentTab === "uncomplete" ? "active" : ""}
+          data-tab="uncomplete"
+          style={{
+            border: "1px solid #aaa",
+            padding: 5,
+            width: 150,
+            cursor: "pointer",
+          }}
+        >
+          Uncomplete
+        </li>
+        <li
+          className={currentTab === "done" ? "active" : ""}
+          data-tab="done"
+          style={{
+            border: "1px solid #aaa",
+            padding: 5,
+            width: 150,
+            cursor: "pointer",
+          }}
+        >
+          Done
+        </li>
+      </div>
+      <button onClick={() => dispatch(removeAllTodos())}>清除全部</button>
+    </>
   );
 }
 

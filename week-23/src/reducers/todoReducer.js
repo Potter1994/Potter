@@ -1,37 +1,40 @@
-// const [todos, setTodos] = useState([])
-const initialState = {
+// const [todos, setTodos] = useState([]);
+const initializeState = {
   todos: [],
 };
 
-// setTodos([action.payload, ...todos])
-const todoReducer = (state = initialState, action) => {
+const todoReducer = (state = initializeState, action) => {
   switch (action.type) {
     case "ADD_TODO":
+      if (!action.payload.text) return state;
       return {
         ...state,
         todos: [action.payload, ...state.todos],
       };
     case "DELETE_TODO":
-      const newTodos = state.todos.filter((i) => i.id !== action.payload.id);
       return {
         ...state,
-        todos: newTodos,
+        todos: state.todos.filter((i) => i.id !== action.payload.id),
       };
-    case "REMOVE_TODO":
-      return {
-        ...state,
-        todos: [],
-      };
-    case "CHANGE_DONE":
-      const id = action.payload;
-      state.todos.forEach((i) => {
-        if (i.id === id) {
-          i.isDone = !i.isDone;
-        }
-      });
+    case "CHANGE_ISDONE":
+      state.todos.forEach((i) =>
+        i.id === action.payload.id ? (i.isDone = !i.isDone) : ""
+      );
       return {
         ...state,
         todos: [...state.todos],
+      };
+    case "EDIT_TODO":
+      const { id, text } = action.payload;
+      state.todos.forEach((i) => (i.id === id ? (i.text = text) : ""));
+      return {
+        ...state,
+        todos: [...state.todos],
+      };
+    case "REMOVE_ALL_TODOS":
+      return {
+        ...state,
+        todos: [],
       };
     default:
       return state;

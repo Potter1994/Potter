@@ -1,9 +1,9 @@
-export const addTodo = (textContent) => {
+export const addTodo = (text) => {
   return {
     type: "ADD_TODO",
     payload: {
       id: new Date().getTime(),
-      textContent,
+      text,
       isDone: false,
     },
   };
@@ -18,24 +18,36 @@ export const deleteTodo = (id) => {
   };
 };
 
-export const removeTodo = () => {
+export const changeIsDone = (id) => {
   return {
-    type: "REMOVE_TODO",
-  };
-};
-
-export const filterTodo = (filter) => {
-  return {
-    type: "CHANGE_TAB",
+    type: "CHANGE_ISDONE",
     payload: {
-      filter,
+      id,
     },
   };
 };
 
-export const changeDoneTodo = (id) => {
+export const editTodo = (todo) => {
   return {
-    type: "CHANGE_DONE",
-    payload: id,
+    type: "EDIT_TODO",
+    payload: {
+      id: todo.id,
+      text: todo.text,
+    },
+  };
+};
+
+export const changeTab = (tab) => {
+  return {
+    type: "CHANGE_TAB",
+    payload: {
+      tab,
+    },
+  };
+};
+
+export const removeAllTodos = () => {
+  return {
+    type: "REMOVE_ALL_TODOS",
   };
 };
