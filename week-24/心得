@@ -1,0 +1,64 @@
+*** 以 24 週這個寫網站例子來講 ***
+
+1. 寫好如何 fetch 抓取 API 資料。 寫在一隻WebAPI.js檔案裡面再來拿去使用
+2. 使用 @redusjs/toolkit 建立 postSlice.js 檔案(相當於直接結合 state, action, reducer 在裡面)，不用再特別去分三隻檔案
+action 可以直接 { setPostList } = postSlice.actions 解構語句直接拿出來 export 出去就好，非常方便。
+而 reducer 也是 export default postSlice.reducer 直接 export 出去。
+而且麻煩的 MiddleWare 本來也要經過很麻煩的創建程序也都幫你直接寫好了，直接使用即可 const something = () => (dispatch) => {}
+
+3. 一樣在 postSlice.js 這個檔案引入 WebAPI 再搭配 MiddleWare 去使用他的 fetch 函式就能順利使用非同步抓取資料後再進行到最後的 action 結果了。
+
+
+------------------   大致使用語法   ------------------
+
+/src/redux/reducer/postSlice.js
+
+import { createSlice } from "@reduxjs/toolkit";
+const initialState = {
+    postList: [],
+    ...
+}
+
+const postSlice = createSlice({
+    name: 'posts',
+    initialState,
+    reducers: {
+        setPost: (state, action) => {
+            state.postList = action.payload
+        },
+        ...
+    }
+})
+
+export const { setPost } = postSlice.actions;
+// 這邊就是拿出他的 aciton (實際上type: "/posts/setPost" )
+// setPost(這邊直接是payload的值)
+
+
+// 最後
+export default postSlice.reducer;
+
+
+
+再到 /src/redux/store.js
+import { configureStore } from "@reduxjs/toolkit";
+import postReducer from "./reducers/postSlice";
+import userReducer from "./reducers/userSlice";
+
+export const store = configureStore({
+  reducer: {
+    posts: postReducer,
+    user: userReducer,
+  },
+});
+
+這樣大致上就結束了，接下來要使用的畫就是在你的 Component 
+import { useSelector, useDispatch } form "react-redux";
+import { setPost } from "../redux/reducers/postSlice";
+
+const postList = useSelector((state) => state.posts.postList);
+
+const dispatch = useDispatch();
+
+dispatch(你要使用的action)
+要直接使用記得用 useEffect 不然會無限重新渲染。
