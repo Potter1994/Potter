@@ -14,6 +14,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUserIsLoading: (state, action) => {
+      // 這邊應該要用 return { ...state, userIsLoading: action.payload } 以回傳一個新的物件來更新才是正確的
       state.userIsLoading = action.payload;
     },
     setUserInfo: (state, action) => {
